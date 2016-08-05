@@ -1,6 +1,8 @@
 window.addEventListener('load', function() {
 	
 	video = document.getElementById('video');
+	pauseScreen = document.getElementById('screen');
+	screenButton = document.getElementById('screen-button');
 
 	pbarContainer = document.getElementById('pbar-container');
 	pbar = document.getElementById('pbar');
@@ -21,6 +23,7 @@ window.addEventListener('load', function() {
 		soundButton.addEventListener('click', muteOrUnmute, false);
 		sbarContainer.addEventListener('click', changeVolume, false);
 		fullscreenButton.addEventListener('click', fullscreen, false);
+		screenButton.addEventListener('click', playOrPause, false);
 
 	}, false);
 
@@ -31,10 +34,16 @@ function playOrPause() {
 		video.play();
 		playButton.src = 'images/pause.png';
 		update = setInterval(updatePlayer, 30);
+
+		pauseScreen.style.display = 'none';
+		screenButton.src = 'images/play.png';
 	} else {
 		video.pause();
 		playButton.src = 'images/play.png';
 		window.clearInterval(update);
+
+		pauseScreen.style.display = 'block';
+		screenButton.src = 'images/play.png';
 	}
 }
 
@@ -45,6 +54,12 @@ function updatePlayer() {
 	if (video.ended) {
 		window.clearInterval(update);
 		playButton.src = 'images/replay.png';
+
+		pauseScreen.style.display = 'block';
+		screenButton.src = 'images/replay.png';
+	} else if (video.paused) {
+		playButton.src = 'images/play.png';
+		screenButton.src = 'images/play.png';
 	}
 }
 
